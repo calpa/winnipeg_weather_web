@@ -2,7 +2,7 @@
 
 I am interested in looking at the climate in Winnipeg, so I used React.js to build the website.
 
-![Screenshot](https://i.imgur.com/IjWuSrv.png)
+![Screenshot](https://i.imgur.com/zSgduwE.png)
 
 ## How to start this project?
 
