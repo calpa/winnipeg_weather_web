@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+
+// import './App.css';
+import MomentUtils from '@date-io/moment';
+
+import Forecast from './containers/Forecast';
+
+// TODO: use react-router to route the pages
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MuiPickersUtilsProvider utils={MomentUtils}>
+      <div
+        className='App'
+        style={{
+          background: '#f5f5f5',
+          width: '100%',
+          // height: '100vh',
+        }}
+      >
+        <Forecast />
+      </div>
+    </MuiPickersUtilsProvider>
   );
 }
 
