@@ -60,10 +60,6 @@ const Forecast = () => {
   }
 
   useEffect(() => {
-    getWeatherForecasts({});
-  }, []);
-
-  useEffect(() => {
     getWeatherForecasts({
       date: selectedDate,
     });
