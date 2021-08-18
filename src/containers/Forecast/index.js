@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   Grid,
   Typography,
@@ -14,10 +14,12 @@ import ForecastCard from '../../components/ForecastCard';
 
 const Forecast = () => {
   const [loaded, setLoaded] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState('All');
   const [weatherForecasts, setWeatherForecasts] = useState([]);
   const [times, setTimes] = useState([]);
+
+  const [availableDates, setAvailableDates] = useState([]);
 
   async function getWeatherForecasts({ date = '2021-08-17' }) {
     try {
@@ -59,11 +61,32 @@ const Forecast = () => {
     }
   }
 
+  const getAvailableDates = useCallback(async () => {
+    try {
+      const url = 'https://pdgzqf.deta.dev/weather/available_days';
+      const { data } = await axios.get(url);
+
+      const availableDates = data.data
+        .map((item) => item._id)
+        .sort((a, b) => moment(a).diff(b));
+      setAvailableDates(availableDates);
+      getWeatherForecasts({
+        date: availableDates[availableDates.length - 1],
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
   useEffect(() => {
     getWeatherForecasts({
       date: selectedDate,
     });
   }, [selectedDate]);
+
+  useEffect(() => {
+    getAvailableDates();
+  }, [getAvailableDates]);
 
   return (
     <Grid
@@ -94,8 +117,8 @@ const Forecast = () => {
             width: '100%',
           }}
         >
-          Winnipeg Weather Forecast -{' '}
-          {moment(selectedDate).format('DD/MM/YYYY')}
+          Winnipeg Weather Forecast
+          {selectedDate && ` -  ${moment(selectedDate).format('DD/MM/YYYY')}`}
         </Typography>
 
         <DatePicker
@@ -105,6 +128,11 @@ const Forecast = () => {
           disableFuture
           style={{
             marginLeft: 20,
+          }}
+          renderDay={(day, selectedDate, isInCurrentMonth, dayComponent) => {
+            const disabled = !availableDates.includes(day.format('YYYY-MM-DD'));
+
+            return React.cloneElement(dayComponent, { disabled });
           }}
         />
 
