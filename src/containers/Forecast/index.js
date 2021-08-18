@@ -79,13 +79,26 @@ const Forecast = () => {
         margin: '0 auto',
       }}
     >
-      <Grid container item xs={12}>
+      <Grid
+        container
+        item
+        xs={12}
+        style={{
+          background: '#ffffff',
+          borderRadius: 10,
+          padding: 10,
+        }}
+      >
         <Typography
-          variant='h2'
+          component='h1'
+          variant='h3'
           style={{
             marginLeft: 5,
+            marginBottom: 10,
+            width: '100%',
           }}
         >
+          Winnipeg Weather Forecast -{' '}
           {moment(selectedDate).format('DD/MM/YYYY')}
         </Typography>
 
