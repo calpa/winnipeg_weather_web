@@ -1,40 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Typography, Card, Select, MenuItem } from '@material-ui/core';
+import {
+  Grid,
+  Typography,
+  Select,
+  MenuItem,
+  CircularProgress,
+} from '@material-ui/core';
 import axios from 'axios';
 import moment from 'moment';
 import { DatePicker } from '@material-ui/pickers';
-const Item = (props) => {
-  const { period_string = '', cloudprecip = '', temperatures } = props;
 
-  return (
-    <Card
-      style={{
-        width: 150,
-        margin: 10,
-        padding: 10,
-      }}
-    >
-      <Grid item xs={6} sm={12}>
-        <p>{period_string}</p>
-      </Grid>
+import ForecastCard from '../../components/ForecastCard';
 
-      <Grid container item justifyContent='center'>
-        {/* <img
-          width={60}
-          height={51}
-          src='/weathericons/35.gif'
-          alt='Clearing'
-          className='center-block'
-        /> */}
-        <Typography paragraph variant='body2' style={{ width: '100%' }}>
-          {temperatures}
-        </Typography>
-
-        <Typography paragraph>{cloudprecip}</Typography>
-      </Grid>
-    </Card>
-  );
-};
 const Forecast = () => {
   const [loaded, setLoaded] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -116,7 +93,6 @@ const Forecast = () => {
           value={selectedDate}
           onChange={setSelectedDate}
           inputVariant='outlined'
-          alignSelf='center'
           disableFuture
           style={{
             marginLeft: 20,
@@ -147,7 +123,7 @@ const Forecast = () => {
         )}
         {!loaded && (
           <Grid container item xs={12} justifyContent='center'>
-            <Typography paragraph>Loading...</Typography>
+            <CircularProgress />
           </Grid>
         )}
 
@@ -163,7 +139,7 @@ const Forecast = () => {
               );
             })
             .map((time) => (
-              <Grid container item xs={12}>
+              <Grid container item xs={12} key={time}>
                 <Typography
                   variant='h3'
                   style={{
@@ -174,7 +150,7 @@ const Forecast = () => {
                 </Typography>
                 <Grid container>
                   {(weatherForecasts[time] || []).map((forecast) => (
-                    <Item key={forecast._id} {...forecast} />
+                    <ForecastCard key={forecast._id} {...forecast} />
                   ))}
                 </Grid>
               </Grid>

@@ -1,6 +1,6 @@
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 
-// import './App.css';
+import './App.css';
 import MomentUtils from '@date-io/moment';
 
 import Forecast from './containers/Forecast';
