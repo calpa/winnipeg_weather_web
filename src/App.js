@@ -15,6 +15,7 @@ function App() {
         style={{
           background: '#f5f5f5',
           width: '100%',
+          padding: 10,
           // height: '100vh',
         }}
       >

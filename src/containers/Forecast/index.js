@@ -104,6 +104,7 @@ const Forecast = () => {
           onChange={(event) => setSelectedTime(event.target.value)}
           style={{
             marginLeft: 20,
+            alignSelf: 'center',
           }}
         >
           <MenuItem value='All'>All</MenuItem>
